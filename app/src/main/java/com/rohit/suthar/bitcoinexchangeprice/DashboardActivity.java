@@ -4,7 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 public class DashboardActivity extends AppCompatActivity {
     private Context mContext;
@@ -24,9 +31,23 @@ public class DashboardActivity extends AppCompatActivity {
 
     private void fetchData() {
         //make volley request
+        StringRequest vollStringRequest = new StringRequest(Request.Method.POST, API_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                updateView(response.trim());
+            }
+        },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("BT",error.toString());
+                }
+            }
+        );
+        Volley.newRequestQueue(mContext).add(vollStringRequest);
     }
 
-    private void updateView() {
-
+    private void updateView(String res) {
+        mTvPrice.setText(res);
     }
 }
