@@ -14,6 +14,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class DashboardActivity extends AppCompatActivity {
@@ -38,7 +39,11 @@ public class DashboardActivity extends AppCompatActivity {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API_URL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.d("BT",response.toString());
+                try {
+                    updateView(response.getString("last"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         },
         new Response.ErrorListener() {
