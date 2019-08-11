@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -117,8 +118,9 @@ public class DashboardActivity extends AppCompatActivity {
         Volley.newRequestQueue(mContext).add(jsonObjectRequest);
     }
 
+    @SuppressLint("DefaultLocale")
     private void updateView(String res) {
-        mTvPrice.setText(res);
+        mTvPrice.setText(String.format(" %.2f",Double.parseDouble(res)));
         mTvCurrencyType.setText(selected_item);
     }
 }
